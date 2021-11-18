@@ -1,13 +1,16 @@
 import React from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Carrinho from './components/Carrinho';
+import PaginaPrincipal from './components/PaginaPrincipal';
 
 function App() {
   return (
-    <>
-      <input type="text" />
-      <p data-testid="home-initial-message">
-        Digite algum termo de pesquisa ou escolha uma categoria.
-      </p>
-    </>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={ PaginaPrincipal } />
+        <Route exact path="/carrinho" component={ Carrinho } />
+      </Switch>
+    </BrowserRouter>
   );
 }
 
