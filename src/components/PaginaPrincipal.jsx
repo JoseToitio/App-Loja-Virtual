@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-class Header extends React.Component {
+class PaginaPrincipal extends React.Component {
   render() {
     return (
       <div>
@@ -15,4 +15,4 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+export default PaginaPrincipal;
