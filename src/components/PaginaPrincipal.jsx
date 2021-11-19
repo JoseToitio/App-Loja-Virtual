@@ -1,27 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Categorias from './Categorias';
+import { getCategories } from '../services/api';
 
 class PaginaPrincipal extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { Categoris: [] };
+    this.state = { categories: [] };
   }
 
   componentDidMount() {
-    const promissesApi = fetch(
-      'https://api.mercadolibre.com/sites/MLB/categories',
-    );
-    promissesApi
-      .then((res) => res.json())
-      .then((res) => {
-        this.setState({ Categoris: res });
+    getCategories()
+      .then((data) => {
+        this.setState({
+          categories: data,
+        });
       });
-    promissesApi.catch(() => console.log('deu ruim'));
   }
 
   render() {
-    const { Categoris } = this.state;
+    const { categories } = this.state;
     return (
       <div>
         <input type="text" />
@@ -32,7 +30,7 @@ class PaginaPrincipal extends React.Component {
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
         <div>
-          {Categoris.map((categoria) => (
+          {categories.map((categoria) => (
             <Categorias
               name={ categoria.name }
               key={ categoria.id }
