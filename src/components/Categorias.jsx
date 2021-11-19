@@ -6,7 +6,13 @@ export default function Categorias(prop) {
     <div>
       <label htmlFor={ id }>
         {name}
-        <input type="radio" data-testid="category" id={ id } value={ name } />
+        <input
+          type="radio"
+          data-testid="category"
+          id={ id }
+          value={ name }
+          name="categories"
+        />
       </label>
     </div>
   );
