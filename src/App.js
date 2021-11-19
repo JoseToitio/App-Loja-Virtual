@@ -7,8 +7,8 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={PaginaPrincipal} />
-        <Route exact path="/carrinho" component={Carrinho} />
+        <Route exact path="/" component={ PaginaPrincipal } />
+        <Route exact path="/carrinho" component={ Carrinho } />
       </Switch>
     </BrowserRouter>
   );
