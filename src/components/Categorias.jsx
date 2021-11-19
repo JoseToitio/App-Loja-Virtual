@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function Categorias(prop) {
-  const { name, id } = prop;
+  const { name, id, handleChange } = prop;
   return (
     <div>
       <label htmlFor={ id }>
@@ -12,6 +12,7 @@ export default function Categorias(prop) {
           id={ id }
           value={ name }
           name="categories"
+          onChange={ handleChange }
         />
       </label>
     </div>
