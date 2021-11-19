@@ -47,10 +47,14 @@ class PaginaPrincipal extends React.Component {
   }
 
   render() {
-    const { categories } = this.state;
+    const { categories, products } = this.state;
     return (
       <div>
-        <input type="text" onChange={ this.handleChange } />
+        <input
+          type="text"
+          onChange={ this.handleChange }
+          data-testid="query-input"
+        />
         <button
           data-testid="query-button"
           type="button"
@@ -74,6 +78,18 @@ class PaginaPrincipal extends React.Component {
             />
           ))}
         </div>
+        {products.length > 0 ? (
+          products.map((product) => (
+            <Card
+              key={ product.id }
+              title={ product.title }
+              price={ product.price }
+              thumbnail={ product.thumbnail }
+            />
+          ))
+        ) : (
+          <p>Nenhum produto encontrado</p>
+        )}
       </div>
     );
   }
