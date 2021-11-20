@@ -85,6 +85,7 @@ class PaginaPrincipal extends React.Component {
               title={ product.title }
               price={ product.price }
               thumbnail={ product.thumbnail }
+              id={ product.id }
             />
           ))
         ) : (

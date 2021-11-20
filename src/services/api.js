@@ -26,3 +26,12 @@ export async function getProducts(query) {
   console.log(responseData);
   return responseData;
 }
+
+export async function getProductsById(id) {
+  const response = await fetch(
+    `https://api.mercadolibre.com/items/${id}`,
+  );
+  const responseData = await response.json();
+  console.log(responseData);
+  return responseData;
+}
