@@ -15,9 +15,11 @@ class PaginaPrincipal extends React.Component {
       inputTextValue: '',
       inputCheckValue: '',
       products: [],
+      saveItem: [],
     };
     this.handleChange = this.handleChange.bind(this);
     this.getProducts = this.getProducts.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -27,6 +29,13 @@ class PaginaPrincipal extends React.Component {
       });
     });
     this.getProducts();
+  }
+
+  handleClick(item) {
+    console.log(`cliquei no item: ${item}`);
+    this.setState((prev) => ({
+      saveItem: [...prev.saveItem].concat(item),
+    }));
   }
 
   handleChange({ target: { value, type, id } }) {
@@ -47,7 +56,7 @@ class PaginaPrincipal extends React.Component {
   }
 
   render() {
-    const { categories, products } = this.state;
+    const { categories, products, saveItem } = this.state;
     return (
       <div>
         <input
@@ -62,7 +71,13 @@ class PaginaPrincipal extends React.Component {
         >
           Pesquisar
         </button>
-        <Link to="/carrinho" data-testid="shopping-cart-button">
+        <Link
+          to={ {
+            pathname: '/carrinho',
+            state: { id: saveItem },
+          } }
+          data-testid="shopping-cart-button"
+        >
           Carrinho
         </Link>
         <p data-testid="home-initial-message">
@@ -86,6 +101,7 @@ class PaginaPrincipal extends React.Component {
               price={ product.price }
               thumbnail={ product.thumbnail }
               id={ product.id }
+              handleClick={ () => this.handleClick(product.id) }
             />
           ))
         ) : (
