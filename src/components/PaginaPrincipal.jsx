@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Categorias from './Categorias';
 import Card from './Card';
 import {
@@ -38,6 +39,11 @@ class PaginaPrincipal extends React.Component {
     }));
   }
 
+  /*   handleClick(item) {
+    let { products } = this.props;
+    products = products.push(item);
+  } */
+
   handleChange({ target: { value, type, id } }) {
     if (type === 'radio') {
       this.setState({ inputCheckValue: id });
@@ -56,28 +62,27 @@ class PaginaPrincipal extends React.Component {
   }
 
   render() {
-    const { categories, products, saveItem } = this.state;
+    const { categories, saveItem, products } = this.state;
+    const { addToCart } = this.props;
     return (
       <div>
         <input
           type="text"
-          onChange={ this.handleChange }
+          onChange={this.handleChange}
           data-testid="query-input"
         />
         <button
           data-testid="query-button"
           type="button"
-          onClick={ this.getProducts }
-        >
+          onClick={this.getProducts}>
           Pesquisar
         </button>
         <Link
-          to={ {
+          to={{
             pathname: '/carrinho',
-            state: { id: saveItem },
-          } }
-          data-testid="shopping-cart-button"
-        >
+            // state: { id: saveItem },
+          }}
+          data-testid="shopping-cart-button">
           Carrinho
         </Link>
         <p data-testid="home-initial-message">
@@ -86,22 +91,22 @@ class PaginaPrincipal extends React.Component {
         <div>
           {categories.map((categoria) => (
             <Categorias
-              name={ categoria.name }
-              key={ categoria.id }
-              id={ categoria.id }
-              handleChange={ this.handleChange }
+              name={categoria.name}
+              key={categoria.id}
+              id={categoria.id}
+              handleChange={this.handleChange}
             />
           ))}
         </div>
         {products.length > 0 ? (
           products.map((product) => (
             <Card
-              key={ product.id }
-              title={ product.title }
-              price={ product.price }
-              thumbnail={ product.thumbnail }
-              id={ product.id }
-              handleClick={ () => this.handleClick(product.id) }
+              key={product.id}
+              title={product.title}
+              price={product.price}
+              thumbnail={product.thumbnail}
+              id={product.id}
+              handleClick={() => addToCart(product.id)}
             />
           ))
         ) : (
@@ -111,5 +116,10 @@ class PaginaPrincipal extends React.Component {
     );
   }
 }
+
+PaginaPrincipal.propTypes = {
+  products: PropTypes.array,
+  addToCart: PropTypes.func,
+};
 
 export default PaginaPrincipal;

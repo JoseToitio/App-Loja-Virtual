@@ -4,16 +4,50 @@ import Carrinho from './components/Carrinho';
 import PaginaPrincipal from './components/PaginaPrincipal';
 import Detalhes from './components/Detalhes';
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={ PaginaPrincipal } />
-        <Route exact path="/carrinho" render={ () => <Carrinho /> } />
-        <Route exact path="/produtos/:id"><Detalhes /></Route>
-      </Switch>
-    </BrowserRouter>
-  );
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      products: [],
+    };
+  }
+
+  addToCart = (item) => {
+    this.setState((prev) => ({
+      products: [...prev.products].concat(item),
+    }));
+  };
+
+  render() {
+    const { products } = this.state;
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={ () => (
+              <PaginaPrincipal products={ products } addToCart={ this.addToCart } />
+            ) }
+          />
+          <Route
+            exact
+            path="/carrinho"
+            render={ () => (
+              <Carrinho products={ products } addToCart={ this.addToCart } />
+            ) }
+          />
+          <Route
+            exact
+            path="/produtos/:id"
+            render={ () => (
+              <Detalhes products={ products } addToCart={ this.addToCart } />
+            ) }
+          />
+        </Switch>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;

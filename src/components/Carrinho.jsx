@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import { getProductsById } from '../services/api';
 
 class Carrinho extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      items: [],
+      items: props.products,
     };
   }
 
-  componentDidMount() {
+  /* componentDidMount() {
     const { location: { state: id } } = this.props;
     id.id.map((ids) => (
       getProductsById(ids).then((data) => (
@@ -20,7 +20,7 @@ class Carrinho extends React.Component {
         }))
       ))
     ));
-  }
+  } */
 
   render() {
     const { items } = this.state;
