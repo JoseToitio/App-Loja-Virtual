@@ -16,7 +16,6 @@ class PaginaPrincipal extends React.Component {
       inputTextValue: '',
       inputCheckValue: '',
       products: [],
-      saveItem: [],
     };
     this.handleChange = this.handleChange.bind(this);
     this.getProducts = this.getProducts.bind(this);
@@ -62,27 +61,26 @@ class PaginaPrincipal extends React.Component {
   }
 
   render() {
-    const { categories, saveItem, products } = this.state;
+    const { categories, products } = this.state;
     const { addToCart } = this.props;
     return (
       <div>
         <input
           type="text"
-          onChange={this.handleChange}
+          onChange={ this.handleChange }
           data-testid="query-input"
         />
         <button
           data-testid="query-button"
           type="button"
-          onClick={this.getProducts}>
+          onClick={ this.getProducts }
+        >
           Pesquisar
         </button>
         <Link
-          to={{
-            pathname: '/carrinho',
-            // state: { id: saveItem },
-          }}
-          data-testid="shopping-cart-button">
+          to="/carrinho"
+          data-testid="shopping-cart-button"
+        >
           Carrinho
         </Link>
         <p data-testid="home-initial-message">
@@ -91,22 +89,22 @@ class PaginaPrincipal extends React.Component {
         <div>
           {categories.map((categoria) => (
             <Categorias
-              name={categoria.name}
-              key={categoria.id}
-              id={categoria.id}
-              handleChange={this.handleChange}
+              name={ categoria.name }
+              key={ categoria.id }
+              id={ categoria.id }
+              handleChange={ this.handleChange }
             />
           ))}
         </div>
         {products.length > 0 ? (
           products.map((product) => (
             <Card
-              key={product.id}
-              title={product.title}
-              price={product.price}
-              thumbnail={product.thumbnail}
-              id={product.id}
-              handleClick={() => addToCart(product.id)}
+              key={ product.id }
+              title={ product.title }
+              price={ product.price }
+              thumbnail={ product.thumbnail }
+              id={ product.id }
+              handleClick={ () => addToCart(product) }
             />
           ))
         ) : (
@@ -118,8 +116,7 @@ class PaginaPrincipal extends React.Component {
 }
 
 PaginaPrincipal.propTypes = {
-  products: PropTypes.array,
-  addToCart: PropTypes.func,
+  addToCart: PropTypes.func.isRequired,
 };
 
 export default PaginaPrincipal;
