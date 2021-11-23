@@ -1,35 +1,20 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import { getProductsById } from '../services/api';
 
 class Carrinho extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      items: [],
+      items: props.products,
     };
-  }
-
-  componentDidMount() {
-    const { location: { state: id } } = this.props;
-    id.id.map((ids) => (
-      getProductsById(ids).then((data) => (
-        this.setState((prev) => ({
-          items: [...prev.items].concat(data),
-        }))
-      ))
-    ));
   }
 
   render() {
     const { items } = this.state;
     const vazio = (
-      <p
-        data-testid="shopping-cart-empty-message"
-      >
-        Seu carrinho está vazio
-      </p>);
+      <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
+    );
     const products = items.map((item) => (
       <div key={ item.id }>
         <p data-testid="shopping-cart-product-name">{item.title}</p>
@@ -47,19 +32,11 @@ class Carrinho extends React.Component {
       </div>
     ));
 
-    return (
-      <div>
-        {items.length > 0 ? products : vazio}
-      </div>
-    );
+    return <div>{items.length > 0 ? products : vazio}</div>;
   }
 }
 Carrinho.propTypes = {
-  location: PropTypes.shape({
-    state: PropTypes.shape({
-      id: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-      }) }).isRequired,
-  }).isRequired,
+  products: PropTypes.string.isRequired,
 };
+
 export default withRouter(Carrinho);

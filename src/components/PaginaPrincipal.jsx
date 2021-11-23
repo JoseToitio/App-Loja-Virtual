@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Categorias from './Categorias';
 import Card from './Card';
 import {
@@ -15,7 +16,6 @@ class PaginaPrincipal extends React.Component {
       inputTextValue: '',
       inputCheckValue: '',
       products: [],
-      saveItem: [],
     };
     this.handleChange = this.handleChange.bind(this);
     this.getProducts = this.getProducts.bind(this);
@@ -38,6 +38,11 @@ class PaginaPrincipal extends React.Component {
     }));
   }
 
+  /*   handleClick(item) {
+    let { products } = this.props;
+    products = products.push(item);
+  } */
+
   handleChange({ target: { value, type, id } }) {
     if (type === 'radio') {
       this.setState({ inputCheckValue: id });
@@ -56,7 +61,8 @@ class PaginaPrincipal extends React.Component {
   }
 
   render() {
-    const { categories, products, saveItem } = this.state;
+    const { categories, products } = this.state;
+    const { addToCart } = this.props;
     return (
       <div>
         <input
@@ -72,10 +78,7 @@ class PaginaPrincipal extends React.Component {
           Pesquisar
         </button>
         <Link
-          to={ {
-            pathname: '/carrinho',
-            state: { id: saveItem },
-          } }
+          to="/carrinho"
           data-testid="shopping-cart-button"
         >
           Carrinho
@@ -101,7 +104,7 @@ class PaginaPrincipal extends React.Component {
               price={ product.price }
               thumbnail={ product.thumbnail }
               id={ product.id }
-              handleClick={ () => this.handleClick(product.id) }
+              handleClick={ () => addToCart(product) }
             />
           ))
         ) : (
@@ -111,5 +114,9 @@ class PaginaPrincipal extends React.Component {
     );
   }
 }
+
+PaginaPrincipal.propTypes = {
+  addToCart: PropTypes.func.isRequired,
+};
 
 export default PaginaPrincipal;
