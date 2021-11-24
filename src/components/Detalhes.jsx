@@ -10,6 +10,7 @@ function Detalhes(props) {
   useLayoutEffect(() => {
     getProductsById(id)
       .then((data) => {
+        data.amount = 1;
         setProduto(data);
       })
       .catch((erro) => console.log(erro));
