@@ -38,11 +38,6 @@ class PaginaPrincipal extends React.Component {
     }));
   }
 
-  /*   handleClick(item) {
-    let { products } = this.props;
-    products = products.push(item);
-  } */
-
   handleChange({ target: { value, type, id } }) {
     if (type === 'radio') {
       this.setState({ inputCheckValue: id });
@@ -53,11 +48,11 @@ class PaginaPrincipal extends React.Component {
 
   getProducts() {
     const { inputTextValue, inputCheckValue } = this.state;
-    getProductsFromCategoryAndQuery(inputCheckValue, inputTextValue).then(
-      (data) => {
-        this.setState({ products: data.results });
-      },
-    );
+    getProductsFromCategoryAndQuery(inputCheckValue, inputTextValue).then((data) => {
+      data.results.amount = 1;
+      return (
+        this.setState({ products: data.results }));
+    });
   }
 
   render() {
@@ -97,16 +92,17 @@ class PaginaPrincipal extends React.Component {
           ))}
         </div>
         {products.length > 0 ? (
-          products.map((product) => (
-            <Card
+          products.map((product) => {
+            product.amount = 1;
+            return (<Card
               key={ product.id }
               title={ product.title }
               price={ product.price }
               thumbnail={ product.thumbnail }
               id={ product.id }
               handleClick={ () => addToCart(product) }
-            />
-          ))
+            />);
+          })
         ) : (
           <p>Nenhum produto encontrado</p>
         )}
